@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>이범무 — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: #2a2a2a;
+      --text: #f0ede8;
+      --muted: #777;
+      --sub: #aaa;
+      --accent: #c8f045;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      color: var(--text); text-decoration: none; letter-spacing: 0.06em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--muted); text-decoration: none;
+      letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.1em; padding: 10px 22px;
+      border: 1px solid var(--border);
+      color: var(--text); text-decoration: none;
+      text-transform: uppercase; transition: all 0.2s;
+    }
+    .nav-cta:hover { border-color: var(--accent); background: var(--accent); color: #0a0a0a; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 130px 60px 80px; position: relative; overflow: hidden;
+    }
+    .hero-bg-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(200,240,69,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,240,69,0.04) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black, transparent);
+      mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black, transparent);
+    }
+    .hero-glow {
+      position: absolute; z-index: 0;
+      width: 600px; height: 600px; top: -150px; right: -100px;
+      background: radial-gradient(circle, rgba(200,240,69,0.07) 0%, transparent 65%);
+      filter: blur(60px); pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 860px; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 32px;
+      animation: fadeUp 0.7s 0.1s both;
+    }
+    .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3rem, 7.5vw, 6.5rem);
+      line-height: 0.96; letter-spacing: -0.02em; margin-bottom: 32px;
+      animation: fadeUp 0.8s 0.25s both;
+    }
+    .hero-title .dim { color: var(--muted); }
+    .hero-title .hl  { color: var(--accent); }
+
+    .hero-desc {
+      font-size: 1rem; color: var(--sub); line-height: 1.85;
+      max-width: 500px; margin-bottom: 52px;
+      animation: fadeUp 0.8s 0.4s both;
+    }
+    .hero-btns {
+      display: flex; gap: 20px; align-items: center;
+      animation: fadeUp 0.8s 0.55s both;
+    }
+    .btn-main {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: #0a0a0a;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+      padding: 15px 34px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(200,240,69,0.22); }
+    .btn-line {
+      font-family: 'DM Mono', monospace; font-size: 0.78rem;
+      color: var(--sub); text-decoration: none; transition: color 0.2s;
+    }
+    .btn-line:hover { color: var(--text); }
+
+    /* STATS */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stat { padding: 36px 48px; border-right: 1px solid var(--border); transition: background 0.25s; }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: var(--surface); }
+    .stat-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.6rem; line-height: 1; margin-bottom: 6px; }
+    .stat-n em { color: var(--accent); font-style: normal; }
+    .stat-l { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
+
+    /* SECTION */
+    section { padding: 110px 60px; }
+    .sec-label {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+    }
+    .sec-label::before { content: ''; width: 18px; height: 1px; background: var(--accent); }
+    .sec-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 56px;
+    }
+
+    /* SKILLS */
+    #skills { background: var(--surface); }
+    .skills-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .skill-group { margin-bottom: 40px; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group-title {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-family: 'DM Mono', monospace; font-size: 0.8rem; padding: 9px 20px;
+      border: 1px solid var(--accent); color: var(--accent);
+      background: rgba(200,240,69,0.05); letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s; cursor: default;
+    }
+    .chip:hover { background: rgba(200,240,69,0.12); transform: translateY(-2px); }
+    .skill-bars { background: var(--surface2); border: 1px solid var(--border); padding: 44px; }
+    .bar-item { margin-bottom: 30px; }
+    .bar-item:last-child { margin-bottom: 0; }
+    .bar-head { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .bar-name { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--sub); }
+    .bar-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+    .bar-track { height: 2px; background: var(--border); position: relative; overflow: visible; }
+    .bar-fill {
+      height: 100%; background: var(--accent); width: 0%; position: relative;
+      transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .bar-fill::after {
+      content: ''; position: absolute; right: -3px; top: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); transform: translateY(-50%);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .pcard {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 44px 40px 72px; position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .pcard:hover { border-color: rgba(200,240,69,0.45); background: var(--surface2); transform: translateY(-5px); }
+    .pcard::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 0; height: 3px; background: var(--accent); transition: width 0.4s ease;
+    }
+    .pcard:hover::after { width: 100%; }
+    .pcard-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 28px; }
+    .pcard-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.5rem; line-height: 1.2; margin-bottom: 8px; color: var(--text); transition: color 0.2s; }
+    .pcard:hover .pcard-title { color: var(--accent); }
+    .pcard-sub { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 18px; }
+    .pcard-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 28px; }
+    .pcard-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .ptag { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: 4px 12px; }
+    .pcard-link { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; transition: color 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .pcard:hover .pcard-link { color: var(--accent); }
+    .pcard-arrow {
+      position: absolute; right: 36px; bottom: 36px;
+      width: 40px; height: 40px; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .pcard:hover .pcard-arrow { border-color: var(--accent); background: var(--accent); }
+    .pcard:hover .pcard-arrow svg { stroke: #0a0a0a; }
+
+    /* CONTACT */
+    #contact { background: var(--surface); text-align: center; }
+    .contact-wrap { max-width: 640px; margin: 0 auto; }
+    .contact-big { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.2rem, 5vw, 4.5rem); line-height: 1; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .contact-big .hl { color: var(--accent); }
+    .contact-sub { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 52px; }
+    .contact-email-link { display: inline-block; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 4px; margin-bottom: 60px; transition: color 0.2s; }
+    .contact-email-link:hover { color: var(--accent); }
+    .socials { display: flex; justify-content: center; gap: 16px; }
+    .soc { width: 46px; height: 46px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s; }
+    .soc:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-4px); }
+
+    /* FOOTER */
+    footer { padding: 32px 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .fc { font-family: 'DM Mono', monospace; font-size: 0.66rem; color: var(--muted); letter-spacing: 0.1em; }
+    .fb { font-family: 'DM Mono', monospace; font-size: 0.66rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 2s ease-in-out infinite; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">이범무<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Contact</a>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <p class="hero-tag">취미로 코딩중</p>
+      <h1 class="hero-title">
+        안녕하세요,<br>
+        <span class="dim">저는 이범무,</span><br>
+        <span class="hl">꿈을 그리는</span> 사람.
+      </h1>
+      <p class="hero-desc">
+        코딩은 취미에서 시작됐지만, 만드는 것에 진심입니다.<br>
+        아이디어를 실제로 동작하는 것으로 바꾸는 걸 즐깁니다.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-main">
+          프로젝트 보기
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="#contact" class="btn-line">연락하기 →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">2<em>+</em></div><div class="stat-l">Projects Done</div></div>
+    <div class="stat"><div class="stat-n">AI<em>×</em></div><div class="stat-l">Powered By</div></div>
+    <div class="stat"><div class="stat-n">2<em>+</em></div><div class="stat-l">Languages</div></div>
+    <div class="stat"><div class="stat-n">100<em>%</em></div><div class="stat-l">Dedication</div></div>
+  </div>
+
+  <section id="skills">
+    <div class="sec-label">Skills</div>
+    <h2 class="sec-title">기술 스택</h2>
+    <div class="skills-wrap">
+      <div>
+        <div class="skill-group">
+          <div class="skill-group-title">Language</div>
+          <div class="skill-chips">
+            <span class="chip">JavaScript</span>
+            <span class="chip">C</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Deploy</div>
+          <div class="skill-chips">
+            <span class="chip">Vercel</span>
+          </div>
+        </div>
+      </div>
+      <div class="skill-bars">
+        <div class="bar-item">
+          <div class="bar-head"><span class="bar-name">JavaScript</span><span class="bar-label">주력</span></div>
+          <div class="bar-track"><div class="bar-fill" id="bar1"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bar-name">C</span><span class="bar-label">학습중</span></div>
+          <div class="bar-track"><div class="bar-fill" id="bar2"></div></div>
+        </div>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bar-name">Vercel 배포</span><span class="bar-label">활용중</span></div>
+          <div class="bar-track"><div class="bar-fill" id="bar3"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-label">Work</div>
+    <h2 class="sec-title">프로젝트</h2>
+    <div class="projects-grid">
+
+      <a class="pcard" href="https://j-math.vercel.app" target="_blank" rel="noopener">
+        <div class="pcard-num">01 — FEATURED</div>
+        <h3 class="pcard-title">J Math</h3>
+        <div class="pcard-sub">수학 AI</div>
+        <p class="pcard-desc">수학 문제를 AI가 단계별로 풀어주는 서비스.<br>어려운 수식도 쉽고 친절하게 설명해주는 수학 특화 AI 어시스턴트.</p>
+        <div class="pcard-tags">
+          <span class="ptag">AI</span><span class="ptag">수학</span><span class="ptag">JavaScript</span><span class="ptag">Vercel</span>
+        </div>
+        <span class="pcard-link">j-math.vercel.app →</span>
+        <div class="pcard-arrow">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg>
+        </div>
+      </a>
+
+      <a class="pcard" href="https://duck-fortune-teller.vercel.app" target="_blank" rel="noopener">
+        <div class="pcard-num">02</div>
+        <h3 class="pcard-title">Duck Fortune Teller</h3>
+        <div class="pcard-sub">운세 AI</div>
+        <p class="pcard-desc">귀여운 오리가 운세를 봐주는 AI 서비스.<br>재미있고 독특한 컨셉의 AI 운세 어시스턴트.</p>
+        <div class="pcard-tags">
+          <span class="ptag">AI</span><span class="ptag">운세</span><span class="ptag">JavaScript</span><span class="ptag">Vercel</span>
+        </div>
+        <span class="pcard-link">duck-fortune-teller.vercel.app →</span>
+        <div class="pcard-arrow">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-wrap">
+      <div class="sec-label" style="justify-content:center;">Contact</div>
+      <h2 class="contact-big">함께<br><span class="hl">만들어요.</span></h2>
+      <p class="contact-sub">새로운 기회, 협업 제안, 혹은 그냥 인사도 환영합니다.<br>편하게 연락해 주세요.</p>
+      <a href="mailto:hello@example.com" class="contact-email-link">hello@example.com</a>
+      <div class="socials">
+        <a href="#" class="soc" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        </a>
+        <a href="#" class="soc" title="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="soc" title="Twitter / X">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="fc">© 2025 이범무. All rights reserved.</span>
+    <span class="fb"><span class="dot"></span>Available for new projects</span>
+  </footer>
+
+  <script>
+    // 스킬 바: 섹션이 보이면 애니메이션
+    const bars = [
+      { el: document.getElementById('bar1'), w: '85%' },
+      { el: document.getElementById('bar2'), w: '55%' },
+      { el: document.getElementById('bar3'), w: '75%' },
+    ];
+    let animated = false;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !animated) {
+        animated = true;
+        bars.forEach((b, i) => setTimeout(() => { b.el.style.width = b.w; }, i * 160));
+      }
+    }, { threshold: 0.25 });
+    obs.observe(document.getElementById('skills'));
+  </script>
+</body>
+</html>
