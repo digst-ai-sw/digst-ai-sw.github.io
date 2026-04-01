@@ -6,23 +6,20 @@
   <title>이범무 — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0a0a0a;
-      --surface: #111111;
-      --surface2: #181818;
-      --border: #222222;
+      --surface: #141414;
+      --surface2: #1c1c1c;
+      --border: #2a2a2a;
       --text: #f0ede8;
-      --text-muted: #666666;
-      --text-sub: #999999;
+      --muted: #777;
+      --sub: #aaa;
       --accent: #c8f045;
-      --accent2: #ff6b35;
-      --accent3: #4fc3f7;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -31,612 +28,218 @@
       font-family: 'Noto Sans KR', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* ── Custom Cursor ── */
-    #cursor {
-      width: 10px; height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s, background 0.2s;
-    }
-    #cursor-ring {
-      width: 36px; height: 36px;
-      border: 1px solid rgba(200,240,69,0.4);
-      border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: transform 0.18s ease, width 0.3s, height 0.3s, border-color 0.2s;
-    }
-    body:has(a:hover) #cursor-ring,
-    body:has(button:hover) #cursor-ring {
-      width: 56px; height: 56px;
-      border-color: var(--accent);
-    }
-
-    /* ── Noise Overlay ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 1000; opacity: 0.35;
-    }
-
-    /* ── Nav ── */
+    /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+      padding: 24px 60px;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      text-decoration: none;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+      color: var(--text); text-decoration: none; letter-spacing: 0.06em;
     }
     .nav-logo span { color: var(--accent); }
-
-    .nav-links {
-      display: flex; gap: 40px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-      position: relative;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--muted); text-decoration: none;
+      letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.2s;
     }
-    .nav-links a::after {
-      content: '';
-      position: absolute; bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { width: 100%; }
-
+    .nav-links a:hover { color: var(--accent); }
     .nav-cta {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      padding: 10px 24px;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.1em; padding: 10px 22px;
       border: 1px solid var(--border);
-      color: var(--text);
-      text-decoration: none;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
-      text-transform: uppercase;
+      color: var(--text); text-decoration: none;
+      text-transform: uppercase; transition: all 0.2s;
     }
-    .nav-cta:hover {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: #0a0a0a;
-    }
+    .nav-cta:hover { border-color: var(--accent); background: var(--accent); color: #0a0a0a; }
 
-    /* ── Hero ── */
+    /* HERO */
     #hero {
-      min-height: 100vh;
-      display: flex; align-items: center;
-      padding: 140px 60px 80px;
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 130px 60px 80px; position: relative; overflow: hidden;
     }
-
-    .hero-grid-bg {
-      position: absolute; inset: 0;
+    .hero-bg-grid {
+      position: absolute; inset: 0; z-index: 0;
       background-image:
-        linear-gradient(rgba(200,240,69,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,240,69,0.03) 1px, transparent 1px);
-      background-size: 80px 80px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+        linear-gradient(rgba(200,240,69,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,240,69,0.04) 1px, transparent 1px);
+      background-size: 72px 72px;
+      -webkit-mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black, transparent);
+      mask-image: radial-gradient(ellipse 70% 70% at 60% 40%, black, transparent);
     }
-
-    .hero-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(100px);
-      pointer-events: none;
+    .hero-glow {
+      position: absolute; z-index: 0;
+      width: 600px; height: 600px; top: -150px; right: -100px;
+      background: radial-gradient(circle, rgba(200,240,69,0.07) 0%, transparent 65%);
+      filter: blur(60px); pointer-events: none;
     }
-    .hero-orb-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(200,240,69,0.08) 0%, transparent 70%);
-      top: -100px; right: -100px;
-    }
-    .hero-orb-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(79,195,247,0.06) 0%, transparent 70%);
-      bottom: 0; left: 20%;
-    }
-
-    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-content { position: relative; z-index: 1; max-width: 860px; }
 
     .hero-tag {
       display: inline-flex; align-items: center; gap: 10px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--accent); letter-spacing: 0.18em; text-transform: uppercase;
       margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s ease forwards;
+      animation: fadeUp 0.7s 0.1s both;
     }
-    .hero-tag::before {
-      content: '';
-      width: 32px; height: 1px;
-      background: var(--accent);
-    }
+    .hero-tag::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
 
     .hero-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(3.2rem, 8vw, 7rem);
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      margin-bottom: 36px;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.4s ease forwards;
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3rem, 7.5vw, 6.5rem);
+      line-height: 0.96; letter-spacing: -0.02em; margin-bottom: 32px;
+      animation: fadeUp 0.8s 0.25s both;
     }
-    .hero-title .line2 { color: var(--text-muted); }
-    .hero-title .accent { color: var(--accent); }
+    .hero-title .dim { color: var(--muted); }
+    .hero-title .hl  { color: var(--accent); }
 
     .hero-desc {
-      font-size: 1rem;
-      color: var(--text-sub);
-      line-height: 1.8;
-      max-width: 520px;
-      margin-bottom: 56px;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.6s ease forwards;
+      font-size: 1rem; color: var(--sub); line-height: 1.85;
+      max-width: 500px; margin-bottom: 52px;
+      animation: fadeUp 0.8s 0.4s both;
     }
-
-    .hero-actions {
+    .hero-btns {
       display: flex; gap: 20px; align-items: center;
-      opacity: 0;
-      animation: fadeUp 0.9s 0.8s ease forwards;
+      animation: fadeUp 0.8s 0.55s both;
     }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: var(--accent);
-      color: #0a0a0a;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      letter-spacing: 0.05em;
-      padding: 16px 36px;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(200,240,69,0.25);
-    }
-    .btn-primary svg { transition: transform 0.2s; }
-    .btn-primary:hover svg { transform: translateX(4px); }
-
-    .btn-ghost {
+    .btn-main {
       display: inline-flex; align-items: center; gap: 10px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text-sub);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: color 0.2s;
+      background: var(--accent); color: #0a0a0a;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+      padding: 15px 34px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
     }
-    .btn-ghost:hover { color: var(--text); }
+    .btn-main:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(200,240,69,0.22); }
+    .btn-line {
+      font-family: 'DM Mono', monospace; font-size: 0.78rem;
+      color: var(--sub); text-decoration: none; transition: color 0.2s;
+    }
+    .btn-line:hover { color: var(--text); }
 
-    .hero-scroll {
-      position: absolute;
-      bottom: 48px; left: 60px;
-      display: flex; align-items: center; gap: 16px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeUp 1s 1.2s ease forwards;
+    /* STATS */
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
     }
-    .scroll-line {
-      width: 1px; height: 60px;
-      background: linear-gradient(to bottom, var(--border), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
+    .stat { padding: 36px 48px; border-right: 1px solid var(--border); transition: background 0.25s; }
+    .stat:last-child { border-right: none; }
+    .stat:hover { background: var(--surface); }
+    .stat-n { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2.6rem; line-height: 1; margin-bottom: 6px; }
+    .stat-n em { color: var(--accent); font-style: normal; }
+    .stat-l { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; }
 
-    /* ── Stats Bar ── */
-    .stats-bar {
-      display: flex;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin: 0;
+    /* SECTION */
+    section { padding: 110px 60px; }
+    .sec-label {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--accent);
+      letter-spacing: 0.2em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
     }
-    .stat-item {
-      flex: 1;
-      padding: 40px 60px;
-      border-right: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-item:hover { background: var(--surface); }
-
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 3rem;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-num span { color: var(--accent); }
-
-    .stat-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .sec-label::before { content: ''; width: 18px; height: 1px; background: var(--accent); }
+    .sec-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 56px;
     }
 
-    /* ── Section Base ── */
-    section { padding: 120px 60px; }
-
-    .section-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 20px;
-    }
-    .section-tag::before {
-      content: '';
-      width: 20px; height: 1px;
-      background: var(--accent);
-    }
-
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 60px;
-    }
-
-    /* ── Skills ── */
+    /* SKILLS */
     #skills { background: var(--surface); }
-
-    .skills-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
+    .skills-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .skill-group { margin-bottom: 40px; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group-title {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted);
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px;
+    }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      font-family: 'DM Mono', monospace; font-size: 0.8rem; padding: 9px 20px;
+      border: 1px solid var(--accent); color: var(--accent);
+      background: rgba(200,240,69,0.05); letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.2s; cursor: default;
+    }
+    .chip:hover { background: rgba(200,240,69,0.12); transform: translateY(-2px); }
+    .skill-bars { background: var(--surface2); border: 1px solid var(--border); padding: 44px; }
+    .bar-item { margin-bottom: 30px; }
+    .bar-item:last-child { margin-bottom: 0; }
+    .bar-head { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .bar-name { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--sub); }
+    .bar-label { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+    .bar-track { height: 2px; background: var(--border); position: relative; overflow: visible; }
+    .bar-fill {
+      height: 100%; background: var(--accent); width: 0%; position: relative;
+      transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .bar-fill::after {
+      content: ''; position: absolute; right: -3px; top: 50%;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); transform: translateY(-50%);
+      box-shadow: 0 0 10px var(--accent);
     }
 
-    .skill-category { margin-bottom: 48px; }
-    .skill-category:last-child { margin-bottom: 0; }
-
-    .skill-cat-title {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .pcard {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 44px 40px 72px; position: relative; overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      text-decoration: none; color: inherit; display: block;
     }
-
-    .skill-tags {
-      display: flex; flex-wrap: wrap; gap: 10px;
+    .pcard:hover { border-color: rgba(200,240,69,0.45); background: var(--surface2); transform: translateY(-5px); }
+    .pcard::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 0; height: 3px; background: var(--accent); transition: width 0.4s ease;
     }
-
-    .skill-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      padding: 8px 18px;
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      letter-spacing: 0.05em;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      cursor: default;
-    }
-    .skill-tag:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(200,240,69,0.04);
-    }
-    .skill-tag.hot {
-      border-color: rgba(200,240,69,0.3);
-      color: var(--accent);
-    }
-
-    .skills-visual {
-      position: sticky;
-      top: 140px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      padding: 48px;
-    }
-
-    .skill-bar-item { margin-bottom: 28px; }
-    .skill-bar-header {
-      display: flex; justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .skill-bar-name {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text-sub);
-    }
-    .skill-bar-pct {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-    .skill-bar-track {
-      height: 2px;
-      background: var(--border);
-      position: relative;
-      overflow: visible;
-    }
-    .skill-bar-fill {
-      height: 100%;
-      background: var(--accent);
-      position: relative;
-      transform-origin: left;
-      animation: barGrow 1.2s ease forwards;
-      transform: scaleX(0);
-    }
-    .skill-bar-fill::after {
-      content: '';
-      position: absolute; right: 0; top: 50%;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      transform: translateY(-50%);
-      box-shadow: 0 0 8px var(--accent);
-    }
-
-    /* ── Projects ── */
-    #projects {}
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      background: var(--border);
-    }
-
-    .project-card {
-      background: var(--bg);
-      padding: 48px 40px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-      cursor: pointer;
-    }
-    .project-card:hover { background: var(--surface); }
-
-    .project-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      height: 2px; width: 0;
-      background: var(--accent);
-      transition: width 0.4s ease;
-    }
-    .project-card:hover::before { width: 100%; }
-
-    .project-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      letter-spacing: 0.15em;
-      margin-bottom: 32px;
-    }
-
-    .project-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1.35rem;
-      line-height: 1.2;
-      margin-bottom: 16px;
-      transition: color 0.2s;
-    }
-    .project-card:hover .project-title { color: var(--accent); }
-
-    .project-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 36px;
-    }
-
-    .project-stack {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-bottom: 36px;
-    }
-    .project-tag {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      background: var(--surface2);
-      padding: 4px 12px;
-      letter-spacing: 0.05em;
-      border: 1px solid var(--border);
-    }
-
-    .project-link {
-      display: flex; align-items: center; gap: 8px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      transition: color 0.2s;
-    }
-    .project-link:hover { color: var(--accent); }
-
-    .project-featured {
-      grid-column: span 2;
-    }
-    .project-featured .project-title {
-      font-size: 2rem;
-    }
-    .project-featured .project-desc { max-width: 520px; }
-
-    .project-arrow {
-      position: absolute;
-      right: 40px; bottom: 48px;
-      width: 44px; height: 44px;
-      border: 1px solid var(--border);
+    .pcard:hover::after { width: 100%; }
+    .pcard-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); letter-spacing: 0.18em; margin-bottom: 28px; }
+    .pcard-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.5rem; line-height: 1.2; margin-bottom: 8px; color: var(--text); transition: color 0.2s; }
+    .pcard:hover .pcard-title { color: var(--accent); }
+    .pcard-sub { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-bottom: 18px; }
+    .pcard-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 28px; }
+    .pcard-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .ptag { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--muted); background: var(--surface2); border: 1px solid var(--border); padding: 4px 12px; }
+    .pcard-link { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; transition: color 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+    .pcard:hover .pcard-link { color: var(--accent); }
+    .pcard-arrow {
+      position: absolute; right: 36px; bottom: 36px;
+      width: 40px; height: 40px; border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
       transition: border-color 0.2s, background 0.2s;
     }
-    .project-card:hover .project-arrow {
-      border-color: var(--accent);
-      background: var(--accent);
-    }
-    .project-card:hover .project-arrow svg { color: #0a0a0a; }
+    .pcard:hover .pcard-arrow { border-color: var(--accent); background: var(--accent); }
+    .pcard:hover .pcard-arrow svg { stroke: #0a0a0a; }
 
-    /* ── Contact ── */
-    #contact {
-      background: var(--surface);
-      text-align: center;
-    }
+    /* CONTACT */
+    #contact { background: var(--surface); text-align: center; }
+    .contact-wrap { max-width: 640px; margin: 0 auto; }
+    .contact-big { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.2rem, 5vw, 4.5rem); line-height: 1; letter-spacing: -0.03em; margin-bottom: 24px; }
+    .contact-big .hl { color: var(--accent); }
+    .contact-sub { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 52px; }
+    .contact-email-link { display: inline-block; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 4px; margin-bottom: 60px; transition: color 0.2s; }
+    .contact-email-link:hover { color: var(--accent); }
+    .socials { display: flex; justify-content: center; gap: 16px; }
+    .soc { width: 46px; height: 46px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--muted); text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s; }
+    .soc:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-4px); }
 
-    .contact-inner {
-      max-width: 700px;
-      margin: 0 auto;
-    }
+    /* FOOTER */
+    footer { padding: 32px 60px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .fc { font-family: 'DM Mono', monospace; font-size: 0.66rem; color: var(--muted); letter-spacing: 0.1em; }
+    .fb { font-family: 'DM Mono', monospace; font-size: 0.66rem; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: blink 2s ease-in-out infinite; }
 
-    .contact-headline {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      line-height: 1;
-      letter-spacing: -0.03em;
-      margin-bottom: 28px;
-    }
-    .contact-headline .accent { color: var(--accent); }
-
-    .contact-sub {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-      margin-bottom: 56px;
-    }
-
-    .contact-email {
-      display: inline-block;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 4px;
-      margin-bottom: 64px;
-      transition: color 0.2s;
-    }
-    .contact-email:hover { color: var(--accent); }
-
-    .social-links {
-      display: flex; justify-content: center; gap: 24px;
-    }
-
-    .social-link {
-      width: 48px; height: 48px;
-      border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, transform 0.2s;
-    }
-    .social-link:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-4px);
-    }
-
-    /* ── Footer ── */
-    footer {
-      padding: 40px 60px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-copy {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-    }
-    .footer-badge {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--text-muted);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .status-dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes barGrow {
-      to { transform: scaleX(1); }
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; }
-      50% { opacity: 1; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(200,240,69,0.4); }
-      50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(200,240,69,0); }
-    }
-
-    /* ── Reveal on scroll ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
   </style>
 </head>
 <body>
 
-  <div id="cursor"></div>
-  <div id="cursor-ring"></div>
-
-  <!-- NAV -->
   <nav>
     <a href="#" class="nav-logo">이범무<span>.</span></a>
     <ul class="nav-links">
@@ -644,362 +247,152 @@
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Hire Me</a>
+    <a href="#contact" class="nav-cta">Contact</a>
   </nav>
 
-  <!-- HERO -->
   <section id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-
+    <div class="hero-bg-grid"></div>
+    <div class="hero-glow"></div>
     <div class="hero-content">
       <p class="hero-tag">취미로 코딩중</p>
-
       <h1 class="hero-title">
         안녕하세요,<br>
-        <span class="line2">저는 이범무,</span><br>
-        <span class="accent">꿈을 그리는</span> 사람입니다.
+        <span class="dim">저는 이범무,</span><br>
+        <span class="hl">꿈을 그리는</span> 사람.
       </h1>
-
       <p class="hero-desc">
-        코딩은 취미에서 시작됐지만, 만드는 것에 진심입니다.
-        디자인, 개발, 그 사이 어딘가에서 꿈을 코드로 그려나가고 있습니다.
+        코딩은 취미에서 시작됐지만, 만드는 것에 진심입니다.<br>
+        아이디어를 실제로 동작하는 것으로 바꾸는 걸 즐깁니다.
       </p>
-
-      <div class="hero-actions">
-        <a href="#projects" class="btn-primary">
+      <div class="hero-btns">
+        <a href="#projects" class="btn-main">
           프로젝트 보기
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M3 8h10M9 4l4 4-4 4"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
-        <a href="#contact" class="btn-ghost">
-          연락하기 →
-        </a>
+        <a href="#contact" class="btn-line">연락하기 →</a>
       </div>
-    </div>
-
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      Scroll
     </div>
   </section>
 
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-num">3<span>+</span></div>
-      <div class="stat-label">Years Experience</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">24<span>+</span></div>
-      <div class="stat-label">Projects Done</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">12<span>+</span></div>
-      <div class="stat-label">Tech Stacks</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">100<span>%</span></div>
-      <div class="stat-label">Dedication</div>
-    </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">2<em>+</em></div><div class="stat-l">Projects Done</div></div>
+    <div class="stat"><div class="stat-n">AI<em>×</em></div><div class="stat-l">Powered By</div></div>
+    <div class="stat"><div class="stat-n">2<em>+</em></div><div class="stat-l">Languages</div></div>
+    <div class="stat"><div class="stat-n">100<em>%</em></div><div class="stat-l">Dedication</div></div>
   </div>
 
-  <!-- SKILLS -->
   <section id="skills">
-    <div class="section-tag">Skills</div>
-    <h2 class="section-title">기술 스택</h2>
-
-    <div class="skills-layout">
+    <div class="sec-label">Skills</div>
+    <h2 class="sec-title">기술 스택</h2>
+    <div class="skills-wrap">
       <div>
-        <div class="skill-category reveal">
-          <div class="skill-cat-title">Frontend</div>
-          <div class="skill-tags">
-            <span class="skill-tag hot">React</span>
-            <span class="skill-tag hot">Next.js</span>
-            <span class="skill-tag hot">TypeScript</span>
-            <span class="skill-tag">Vue.js</span>
-            <span class="skill-tag">Tailwind CSS</span>
-            <span class="skill-tag">Framer Motion</span>
+        <div class="skill-group">
+          <div class="skill-group-title">Language</div>
+          <div class="skill-chips">
+            <span class="chip">JavaScript</span>
+            <span class="chip">C</span>
           </div>
         </div>
-
-        <div class="skill-category reveal">
-          <div class="skill-cat-title">Backend</div>
-          <div class="skill-tags">
-            <span class="skill-tag hot">Node.js</span>
-            <span class="skill-tag hot">Express</span>
-            <span class="skill-tag">NestJS</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">FastAPI</span>
-            <span class="skill-tag">GraphQL</span>
-          </div>
-        </div>
-
-        <div class="skill-category reveal">
-          <div class="skill-cat-title">Database & Infra</div>
-          <div class="skill-tags">
-            <span class="skill-tag">PostgreSQL</span>
-            <span class="skill-tag">MongoDB</span>
-            <span class="skill-tag">Redis</span>
-            <span class="skill-tag hot">Docker</span>
-            <span class="skill-tag">AWS</span>
-            <span class="skill-tag">Vercel</span>
+        <div class="skill-group">
+          <div class="skill-group-title">Deploy</div>
+          <div class="skill-chips">
+            <span class="chip">Vercel</span>
           </div>
         </div>
       </div>
-
-      <div class="skills-visual reveal">
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">React / Next.js</span>
-            <span class="skill-bar-pct">92%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" style="width:92%"></div>
-          </div>
+      <div class="skill-bars">
+        <div class="bar-item">
+          <div class="bar-head"><span class="bar-name">JavaScript</span><span class="bar-label">주력</span></div>
+          <div class="bar-track"><div class="bar-fill" id="bar1"></div></div>
         </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">TypeScript</span>
-            <span class="skill-bar-pct">88%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" style="width:88%; animation-delay:0.1s"></div>
-          </div>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bar-name">C</span><span class="bar-label">학습중</span></div>
+          <div class="bar-track"><div class="bar-fill" id="bar2"></div></div>
         </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Node.js / Express</span>
-            <span class="skill-bar-pct">84%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" style="width:84%; animation-delay:0.2s"></div>
-          </div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Python</span>
-            <span class="skill-bar-pct">76%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" style="width:76%; animation-delay:0.3s"></div>
-          </div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-header">
-            <span class="skill-bar-name">Docker / DevOps</span>
-            <span class="skill-bar-pct">70%</span>
-          </div>
-          <div class="skill-bar-track">
-            <div class="skill-bar-fill" style="width:70%; animation-delay:0.4s"></div>
-          </div>
+        <div class="bar-item">
+          <div class="bar-head"><span class="bar-name">Vercel 배포</span><span class="bar-label">활용중</span></div>
+          <div class="bar-track"><div class="bar-fill" id="bar3"></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
-    <div class="section-tag">Work</div>
-    <h2 class="section-title">프로젝트</h2>
-
+    <div class="sec-label">Work</div>
+    <h2 class="sec-title">프로젝트</h2>
     <div class="projects-grid">
-      <!-- Featured -->
-      <div class="project-card project-featured reveal">
-        <div class="project-num">01 — FEATURED</div>
-        <h3 class="project-title">E-Commerce<br>Platform</h3>
-        <p class="project-desc">
-          Next.js와 Stripe를 활용한 풀스택 커머스 플랫폼.
-          SSR/ISR 최적화, 실시간 재고 관리, 관리자 대시보드까지 구현.
-        </p>
-        <div class="project-stack">
-          <span class="project-tag">Next.js</span>
-          <span class="project-tag">TypeScript</span>
-          <span class="project-tag">PostgreSQL</span>
-          <span class="project-tag">Stripe</span>
-          <span class="project-tag">Vercel</span>
-        </div>
-        <a href="#" class="project-link">GitHub →</a>
-        <div class="project-arrow">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 12L12 4M12 4H6M12 4v6"/>
-          </svg>
-        </div>
-      </div>
 
-      <!-- Card 2 -->
-      <div class="project-card reveal">
-        <div class="project-num">02</div>
-        <h3 class="project-title">AI Chat<br>Assistant</h3>
-        <p class="project-desc">
-          OpenAI API 기반 대화형 AI 인터페이스. 스트리밍 응답, 대화 이력 저장 구현.
-        </p>
-        <div class="project-stack">
-          <span class="project-tag">React</span>
-          <span class="project-tag">OpenAI</span>
-          <span class="project-tag">Node.js</span>
-          <span class="project-tag">MongoDB</span>
+      <a class="pcard" href="https://j-math.vercel.app" target="_blank" rel="noopener">
+        <div class="pcard-num">01 — FEATURED</div>
+        <h3 class="pcard-title">J Math</h3>
+        <div class="pcard-sub">수학 AI</div>
+        <p class="pcard-desc">수학 문제를 AI가 단계별로 풀어주는 서비스.<br>어려운 수식도 쉽고 친절하게 설명해주는 수학 특화 AI 어시스턴트.</p>
+        <div class="pcard-tags">
+          <span class="ptag">AI</span><span class="ptag">수학</span><span class="ptag">JavaScript</span><span class="ptag">Vercel</span>
         </div>
-        <a href="#" class="project-link">Demo →</a>
-        <div class="project-arrow">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 12L12 4M12 4H6M12 4v6"/>
-          </svg>
+        <span class="pcard-link">j-math.vercel.app →</span>
+        <div class="pcard-arrow">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg>
         </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="project-card reveal">
-        <div class="project-num">03</div>
-        <h3 class="project-title">Dev Blog<br>Platform</h3>
-        <p class="project-desc">
-          MDX 기반 기술 블로그. 코드 하이라이팅, 다크모드, SEO 최적화.
-        </p>
-        <div class="project-stack">
-          <span class="project-tag">Next.js</span>
-          <span class="project-tag">MDX</span>
-          <span class="project-tag">Tailwind</span>
-        </div>
-        <a href="#" class="project-link">Visit →</a>
-        <div class="project-arrow">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 12L12 4M12 4H6M12 4v6"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="project-card reveal">
-        <div class="project-num">04</div>
-        <h3 class="project-title">Task<br>Manager</h3>
-        <p class="project-desc">
-          실시간 협업 칸반 보드. WebSocket 기반 동시 편집 및 팀 관리 기능.
-        </p>
-        <div class="project-stack">
-          <span class="project-tag">React</span>
-          <span class="project-tag">Socket.io</span>
-          <span class="project-tag">Redis</span>
-        </div>
-        <a href="#" class="project-link">GitHub →</a>
-        <div class="project-arrow">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 12L12 4M12 4H6M12 4v6"/>
-          </svg>
-        </div>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="project-card reveal">
-        <div class="project-num">05</div>
-        <h3 class="project-title">Data<br>Dashboard</h3>
-        <p class="project-desc">
-          대용량 데이터 시각화 대시보드. D3.js 기반 인터랙티브 차트 구현.
-        </p>
-        <div class="project-stack">
-          <span class="project-tag">React</span>
-          <span class="project-tag">D3.js</span>
-          <span class="project-tag">Python</span>
-          <span class="project-tag">FastAPI</span>
-        </div>
-        <a href="#" class="project-link">Demo →</a>
-        <div class="project-arrow">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M4 12L12 4M12 4H6M12 4v6"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="contact-inner">
-      <div class="section-tag" style="justify-content:center; margin-bottom:28px;">Contact</div>
-      <h2 class="contact-headline reveal">
-        함께<br><span class="accent">만들어요.</span>
-      </h2>
-      <p class="contact-sub reveal">
-        새로운 기회, 협업 제안, 혹은 그냥 인사라도 환영합니다.<br>
-        편하게 연락해 주세요.
-      </p>
-      <a href="/cdn-cgi/l/email-protection#563e333a3a3916332e373b263a337835393b" class="contact-email reveal">
-        <span class="__cf_email__" data-cfemail="553d3039393a15302d34382539307b363a38">[email&#160;protected]</span>
       </a>
 
-      <div class="social-links reveal">
-        <!-- GitHub -->
-        <a href="#" class="social-link" title="GitHub">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
-          </svg>
+      <a class="pcard" href="https://duck-fortune-teller.vercel.app" target="_blank" rel="noopener">
+        <div class="pcard-num">02</div>
+        <h3 class="pcard-title">Duck Fortune Teller</h3>
+        <div class="pcard-sub">운세 AI</div>
+        <p class="pcard-desc">귀여운 오리가 운세를 봐주는 AI 서비스.<br>재미있고 독특한 컨셉의 AI 운세 어시스턴트.</p>
+        <div class="pcard-tags">
+          <span class="ptag">AI</span><span class="ptag">운세</span><span class="ptag">JavaScript</span><span class="ptag">Vercel</span>
+        </div>
+        <span class="pcard-link">duck-fortune-teller.vercel.app →</span>
+        <div class="pcard-arrow">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12L12 4M12 4H6M12 4v6"/></svg>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-wrap">
+      <div class="sec-label" style="justify-content:center;">Contact</div>
+      <h2 class="contact-big">함께<br><span class="hl">만들어요.</span></h2>
+      <p class="contact-sub">새로운 기회, 협업 제안, 혹은 그냥 인사도 환영합니다.<br>편하게 연락해 주세요.</p>
+      <a href="mailto:hello@example.com" class="contact-email-link">hello@example.com</a>
+      <div class="socials">
+        <a href="#" class="soc" title="GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
         </a>
-        <!-- LinkedIn -->
-        <a href="#" class="social-link" title="LinkedIn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
-            <rect x="2" y="9" width="4" height="12"/>
-            <circle cx="4" cy="4" r="2"/>
-          </svg>
+        <a href="#" class="soc" title="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         </a>
-        <!-- Twitter/X -->
-        <a href="#" class="social-link" title="Twitter">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
-        </a>
-        <!-- Notion -->
-        <a href="#" class="social-link" title="Blog">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-            <path d="M2 17l10 5 10-5"/>
-            <path d="M2 12l10 5 10-5"/>
-          </svg>
+        <a href="#" class="soc" title="Twitter / X">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
-    <span class="footer-copy">© 2025 — dev.portfolio. All rights reserved.</span>
-    <span class="footer-badge">
-      <span class="status-dot"></span>
-      Available for new projects
-    </span>
+    <span class="fc">© 2025 이범무. All rights reserved.</span>
+    <span class="fb"><span class="dot"></span>Available for new projects</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
-    });
-
-    function animateRing() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-      requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 })
+  <script>
+    // 스킬 바: 섹션이 보이면 애니메이션
+    const bars = [
+      { el: document.getElementById('bar1'), w: '85%' },
+      { el: document.getElementById('bar2'), w: '55%' },
+      { el: document.getElementById('bar3'), w: '75%' },
+    ];
+    let animated = false;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !animated) {
+        animated = true;
+        bars.forEach((b, i) => setTimeout(() => { b.el.style.width = b.w; }, i * 160));
+      }
+    }, { threshold: 0.25 });
+    obs.observe(document.getElementById('skills'));
+  </script>
+</body>
+</html>
